@@ -5,10 +5,12 @@ import useObserver from '../../hooks/useObserver';
 
 import images from '../../../public/images/landing_chat.png';
 import styles from './LandingChat.module.scss';
+import useAOS from '../../hooks/useAOS';
 
 const LandingChat = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const observer = useObserver(ref, { rootMargin: '-280px' });
+  // const observer = useObserver(ref, { rootMargin: '-280px' });
+  useAOS(ref);
 
   return (
     <section className={styles.section}>
@@ -16,7 +18,6 @@ const LandingChat = () => {
       <div className={styles.col}>
         <div className={styles.paragraphs}>
           <Paragraph
-            ref={ref}
             title='Get lightning speed support'
             content='Hello, whos there? Its us, returning your live chat messages in record time! Get answers quickly from our friendly experts.'
           />
@@ -31,7 +32,8 @@ const LandingChat = () => {
         </div>
         <div className={styles.image_container}>
           <img src={images} alt="landing chat" className={styles.image} />
-          {observer?.isIntersecting &&  <Chat />}
+          {/* {observer?.isIntersecting &&  <Chat />} */}
+          <Chat ref={ref}/>
         </div>
       </div>
     </section>
