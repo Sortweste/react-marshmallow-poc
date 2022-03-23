@@ -33,7 +33,7 @@ const LandingChat = () => {
         <div className={styles.image_container}>
           <img src={images} alt="landing chat" className={styles.image} />
           {/* {observer?.isIntersecting &&  <Chat />} */}
-          <Chat ref={ref}/>
+          <Chat ref={ref} color='#f06292'/>
         </div>
       </div>
     </section>

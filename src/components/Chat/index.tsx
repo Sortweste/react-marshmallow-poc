@@ -1,10 +1,14 @@
 import { forwardRef } from 'react';
 import styles from './Chat.module.scss';
 
-const Chat = forwardRef<HTMLDivElement>(({}, ref) => {
+type ChatT = {
+  color: string;
+};
+
+const Chat = forwardRef<HTMLDivElement, ChatT>(({color}, ref) => {
 
   return (
-    <div className={styles.box} ref={ref} />
+    <div className={styles.box} ref={ref} style={{ backgroundColor: color }}/>
   );
 });
 

@@ -1,7 +1,7 @@
 .box {
   box-sizing: border-box;
-  // width: 300px;
-  // height: 430px;
+  width: 300px;
+  height: 430px;
   border-radius: 16px;
   background-color: #fff;
   box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
@@ -11,4 +11,5 @@
   position: absolute;
   left: 0;
   top: 18%;
+  transform-style: preserve-3d;
 }
