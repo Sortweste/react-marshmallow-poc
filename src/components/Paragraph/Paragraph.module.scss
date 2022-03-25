@@ -3,9 +3,10 @@
   flex-direction: column;
   text-align: left;
   color: #112035;
-  box-sizing: border-box;
   max-width: 512px;
-  max-height: 96px;
+  min-height: 100vh;
+  padding: 64px;
+  flex-wrap: 0;
 }
 
 .title {

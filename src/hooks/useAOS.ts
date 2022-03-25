@@ -1,7 +1,6 @@
-import { RefObject, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 const useAOS = () => {
-  const initialPosition = window.scrollY;
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -9,7 +8,6 @@ const useAOS = () => {
     const executeAnimation = () => {
       // At scrollPercentage = 50%, Math.sin(pi/2) = 1.
       const scrollPercentage = window.scrollY / window.innerHeight;
-      console.log(scrollPercentage);
       // if(scrollPercentage > 1) return;
       const mapScrollPercentage = scrollPercentage * Math.PI;
       const step = Math.sin(mapScrollPercentage);
