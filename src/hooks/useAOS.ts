@@ -1,20 +1,33 @@
-import { useLayoutEffect, useRef } from "react";
+import { RefObject, useLayoutEffect, useRef } from "react";
 import trapezoidWave from "../utils/trapezoid";
 
-const useAOS = () => {
+const transformElement = (ref: RefObject<HTMLDivElement>, value: number) => {
+  if(ref?.current) {
+    ref.current.style.transform = `scale3d(${value}, ${value}, 1)`;
+  }
+};
+
+const useAOS = (parentId: string) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    // y = f(x), x = 0 to pi, where x is the scroll percentage, y is the computed (height/width) value
+    const parent = document.getElementById(parentId);
     const executeAnimation = () => {
-      const scrollPercentage = window.scrollY / window.innerHeight;
-      // if(scrollPercentage > 1) return;
+      const windowBottom = window.scrollY + window.innerHeight;
+      const parentTop = parent?.getBoundingClientRect().top || 0;
+      const elementTop = parentTop + window.scrollY;
+      const scrollPercentage = (windowBottom - elementTop) / (parent?.offsetHeight || 1);
+      
+      if( (scrollPercentage < 0 ) || (scrollPercentage > 1) ){
+        transformElement(ref, 0);
+        return;
+      }
+
       const mapScrollPercentage = scrollPercentage * Math.PI;
       const step = trapezoidWave(mapScrollPercentage);
-      
-      if(ref?.current) {
-        ref.current.style.transform = `scale3d(${step}, ${step}, 1)`;
-      }
+      const computedStep = step > 0.9 ? 1 : step;
+
+      transformElement(ref, computedStep);
     };
 
     window.addEventListener('scroll', executeAnimation);

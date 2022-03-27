@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const initialConfig = {
   rootMargin: '0px',
@@ -7,7 +7,8 @@ const initialConfig = {
   freeze: false,
 };
 
-const useObserver = (element: RefObject<Element>, config = initialConfig as Partial<typeof initialConfig>) => {
+const useObserver = (config = initialConfig as Partial<typeof initialConfig>) => {
+  const element = useRef<HTMLDivElement>(null);
   const [observer, setObserver] = useState<IntersectionObserverEntry>();
 
   const setObserverEntries = ([entry]: IntersectionObserverEntry[]): void => {
@@ -23,8 +24,7 @@ const useObserver = (element: RefObject<Element>, config = initialConfig as Part
 
   }, [element, config.rootMargin]);
 
-
-  return observer;
+  return [element, observer] as const;
 };
 
 export default useObserver;
