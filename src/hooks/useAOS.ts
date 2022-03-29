@@ -1,5 +1,5 @@
 import { RefObject, useLayoutEffect, useRef } from "react";
-import trapezoidWave from "../utils/trapezoid";
+import piecewiseWave from "../utils/piecewise";
 
 const transformElement = (ref: RefObject<HTMLDivElement>, value: number) => {
   if(ref?.current) {
@@ -17,17 +17,9 @@ const useAOS = (parentId: string) => {
       const parentTop = parent?.getBoundingClientRect().top || 0;
       const elementTop = parentTop + window.scrollY;
       const scrollPercentage = (windowBottom - elementTop) / (parent?.offsetHeight || 1);
-      
-      if( (scrollPercentage < 0 ) || (scrollPercentage > 1) ){
-        transformElement(ref, 0);
-        return;
-      }
-
       const mapScrollPercentage = scrollPercentage * Math.PI;
-      const step = trapezoidWave(mapScrollPercentage);
-      const computedStep = step > 0.9 ? 1 : step;
-
-      transformElement(ref, computedStep);
+      const step = piecewiseWave(mapScrollPercentage);
+      transformElement(ref, step);
     };
 
     window.addEventListener('scroll', executeAnimation);
